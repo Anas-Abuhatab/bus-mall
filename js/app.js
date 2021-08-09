@@ -61,13 +61,24 @@ function render(){ //! STEP NUMBER FOUR make render go to JS section on html and
   theRandomtwo = random( 0,arrOfImg.length - 1 );
   theRandomthree = random( 0,arrOfImg.length - 1 );
 
-  firstImg.src = Mall.mallAll[theRandomone].imgSrc; //!STEP #6 add parameter to id
-  secondImg.src = Mall.mallAll[theRandomtwo].imgSrc;
-  thirdImg.src = Mall.mallAll[theRandomthree].imgSrc;
+  while ( theRandomone === theRandomtwo || theRandomtwo === theRandomthree || theRandomthree === theRandomone ){
+    theRandomone = random( 0,arrOfImg.length - 1 );
+    theRandomtwo = random( 0,arrOfImg.length - 1 );
+    theRandomthree = random( 0,arrOfImg.length - 1 );
+  }
 
-  Mall.mallAll[theRandomone ].numofshow++;
-  Mall.mallAll[ theRandomtwo ].numofshow++;
-  Mall.mallAll[ theRandomthree ].numofshow++;
+  if ( theRandomone !== theRandomtwo && theRandomone !== theRandomthree && theRandomthree !== theRandomtwo ){
+
+    firstImg.src = Mall.mallAll[theRandomone].imgSrc; //!STEP #6 add parameter to id
+    secondImg.src = Mall.mallAll[theRandomtwo].imgSrc;
+    thirdImg.src = Mall.mallAll[theRandomthree].imgSrc;
+
+    Mall.mallAll[theRandomone ].numofshow++;
+    Mall.mallAll[ theRandomtwo ].numofshow++;
+    Mall.mallAll[ theRandomthree ].numofshow++;
+
+  }
+
 
 
 }
