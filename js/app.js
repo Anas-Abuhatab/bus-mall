@@ -25,6 +25,7 @@ let firstImg = document.getElementById( 'firstImg' ); //!STEP #5 getElementById
 let secondImg = document.getElementById( 'secondImg' );
 let thirdImg = document.getElementById( 'thirdImg' );
 let image = document.getElementById( 'imagesection' );
+let botton = document.getElementById( 'botton' );
 
 
 
@@ -45,7 +46,7 @@ Mall.mallAll = [];
 
 
 for( let i = 0;i < arrOfImg.length ;i++ ){ //! STEP NUMBER THREE make objects
-  new Mall ( arrOfImg[i].split( '.' )[1] , arrOfImg[i] );
+  new Mall ( arrOfImg[i].split( '.' )[1].split( '/' )[2] , arrOfImg[i] );
 }
 
 let theRandomone = 0;
@@ -68,7 +69,6 @@ function render(){ //! STEP NUMBER FOUR make render go to JS section on html and
   Mall.mallAll[ theRandomtwo ].numofshow++;
   Mall.mallAll[ theRandomthree ].numofshow++;
 
-  // console.log( theRandomone );
 
 }
 
@@ -85,49 +85,38 @@ function clicker( event ){
 
   if ( ( event.target.id === 'firstImg' || event.target.id === 'secondImg' ||
   event.target.id === 'thirdImg' ) && ( cont < maxcont ) ){
+    if ( event.target.id === 'firstImg' ){
+      Mall.mallAll[theRandomone].clickCount++;
+    }
+
+    if ( event.target.id === 'secondImg' ){
+      Mall.mallAll[theRandomtwo].clickCount++;
+    }
+    if ( event.target.id === 'thirdImg' ){
+      Mall.mallAll[theRandomthree].clickCount++;
+    }
+
     cont++;
     render();
+
   }
-  console.log( Mall.mallAll );
-  console.log( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomone].imgSrc.split( '/' ) [2] );
-  console.log( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomtwo].imgSrc.split( '/' ) [2] );
-  console.log( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomthree].imgSrc.split( '/' ) [2] );
+  if( cont >= maxcont ){
+    image.removeEventListener( 'click' , clicker );
+  }
 
 }
 
-firstImg.addEventListener( 'click' ,holder1 );
-function holder1( event ){
+botton.addEventListener( 'click' ,result );
+function result( ){
+  let ul = document.createElement( 'ul' );
+  botton.appendChild( ul );
 
-  if ( ( event.target.id === 'firstImg' || event.target.id === 'secondImg' ||
-  event.target.id === 'thirdImg' ) && ( cont < maxcont ) ){
-    if( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomone].imgSrc.split( '/' ) [2] ){
-      Mall.mallAll[theRandomone].clickCount++;
+  for ( let i = 0; i < Mall.mallAll.length; i++ ) {
 
-    }
-
-  }
-}
-secondImg.addEventListener( 'click' ,holder );
-function holder( event ){
-  if ( ( event.target.id === 'firstImg' || event.target.id === 'secondImg' ||
-  event.target.id === 'thirdImg' ) && ( cont < maxcont ) ){
-    if( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomtwo].imgSrc.split( '/' ) [2] ){
-      Mall.mallAll[theRandomtwo].clickCount++;
-
-    }
+    let li = document.createElement( 'li' );
+    li.textContent = `${Mall.mallAll[i].imgName} had ${Mall.mallAll[i].numofshow} votes ,and was seen ${Mall.mallAll[i].clickCount}
+  times`;
+    ul.appendChild( li );
 
   }
 }
-
-thirdImg.addEventListener( 'click' ,holder3 );
-function holder3( event ){
-  if ( ( event.target.id === 'firstImg' || event.target.id === 'secondImg' ||
-  event.target.id === 'thirdImg' ) && ( cont < maxcont ) ){
-    if( event.target.src.split( '/' )[4] === Mall.mallAll[theRandomthree].imgSrc.split( '/' ) [2] ){
-      Mall.mallAll[theRandomthree].clickCount++;
-
-    }
-  }
-}
-
-
