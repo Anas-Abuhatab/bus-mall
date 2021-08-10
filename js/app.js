@@ -36,20 +36,20 @@ let maxcont = 25;
 
 
 
-function Mall ( imgName ,imgSrc ){ //! STEP NUMBER TWO  make constractor with his tool (all)
+function Mall ( imgName ,imgSrc ,numofshow = 0 ){ //! STEP NUMBER TWO  make constractor with his tool (all)
   this.imgName = imgName;
   this.imgSrc = imgSrc;
-  this.numofshow = 0;
+  this.numofshow = numofshow;
   this.clickCount = 0;
   Mall.mallAll.push( this );
 
 }
 Mall.mallAll = [];
 
+getdata();
 
-for( let i = 0;i < arrOfImg.length ;i++ ){ //! STEP NUMBER THREE make objects
-  new Mall ( arrOfImg[i].split( '.' )[1].split( '/' )[2] , arrOfImg[i] );
-}
+
+
 
 let theRandomone = 0;
 let theRandomtwo = 0;
@@ -74,11 +74,11 @@ function render(){ //! STEP NUMBER FOUR make render go to JS section on html and
   );
 
 
-  console.log( prevArr );
+  // console.log( prevArr );
 
   prevArr = [theRandomone ,theRandomtwo,theRandomthree];
 
-  console.log( prevArr );
+  // console.log( prevArr );
   if ( theRandomone !== theRandomtwo && theRandomone !== theRandomthree && theRandomthree !== theRandomtwo ){
 
     firstImg.src = Mall.mallAll[theRandomone].imgSrc; //!STEP #6 add parameter to id
@@ -89,24 +89,24 @@ function render(){ //! STEP NUMBER FOUR make render go to JS section on html and
     Mall.mallAll[ theRandomtwo ].numofshow++;
     Mall.mallAll[ theRandomthree ].numofshow++;
   }
-
+  localStorage.data = JSON.stringify( Mall.mallAll );
 }
 render();
 
 function random( min, max ) {
   let random;
-  let allowed;
+  // let allowed;
 
-  do{
-    random = Math.floor( Math.random() * ( max - min + 1 ) + min );
-    allowed = true;
-    for ( let i = 0; i < prevArr.length; i++ ) {
-      if( random === prevArr[i] ){
-        allowed = false;
-      }
+  // do{
+  random = Math.floor( Math.random() * ( max - min + 1 ) + min );
+  //   allowed = true;
+  //   for ( let i = 0; i < prevArr.length; i++ ) {
+  //     if( random === prevArr[i] ){
+  //       allowed = false;
+  //     }
 
-    }
-  }while( !allowed );
+  //   }
+  // }while( !allowed );
 
   return random;
 }
@@ -132,7 +132,8 @@ function clicker( event ){
     cont++;
     render();
 
-  }else{createChart();}
+  }
+  else{ createChart(); }
 
 
 }
@@ -217,3 +218,33 @@ function createChart (){
   } );
 }
 
+function getdata(){
+  if( localStorage.data ){
+    let data = JSON.parse( localStorage.data );
+    for( let i = 0;i < data.length ;i++ ){ //! STEP NUMBER THREE make objects
+      new Mall ( data[i].name , data[i].imgSrc ,data[i].numofshow );
+    }
+
+    console.log( data );
+  }else{
+    for( let i = 0;i < arrOfImg.length ;i++ ){ //! STEP NUMBER THREE make objects
+      new Mall ( arrOfImg[i].split( '.' )[1].split( '/' )[2] , arrOfImg[i] );
+    }
+  }
+}
+
+
+// let obj = {
+//   name :'ahmad'
+
+// };
+
+// localStorage.setItem( 'classcode', '201d34' );
+// localStorage.data = 'jjjjj' ,'dcffd','adasfd';
+// localStorage.data1 = JSON.stringify( obj );
+
+// // console.log(localStorage.data1);
+
+// let newobj = localStorage.data1;
+// let convertedobj = JSON.parse( newobj );
+// console.log( convertedobj );
